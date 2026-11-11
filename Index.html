@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bùi Thanh Ngân | E-Commerce & UI/UX Specialist Portfolio</title>
+    <!-- Font Google: 'Be Vietnam Pro' & 'Plus Jakarta Sans' -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #E85D75;
+            --primary-soft: #FF9AA2;
+            --secondary: #6B5B95;
+            --accent-blue: #45B7D1;
+            --peach-light: #FFF0ED;
+            --lavender-light: #F3F0FF;
+            --bg-gradient: linear-gradient(135deg, #FFEBEB 0%, #FFF5EB 25%, #EBF8FF 60%, #F5EFFF 100%);
+            --glass-bg: rgba(255, 255, 255, 0.78);
+            --glass-bg-hover: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.92);
+            --text-main: #2D3748;
+            --text-heading: #1A202C;
+            --text-muted: #4A5568;
+            
+            --shadow-title: 2px 4px 12px rgba(232, 93, 117, 0.22);
+            --shadow-card: 0 14px 35px -5px rgba(232, 93, 117, 0.16), 0 6px 16px -2px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 22px 48px -8px rgba(232, 93, 117, 0.3), 0 10px 24px -4px rgba(0, 0, 0, 0.08);
+            --radius-lg: 26px;
+            --radius-md: 18px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient);
+            background-size: 300% 300%;
+            animation: gradientBG 18s ease infinite;
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* KHU VỰC HẠT NỀN */
+        #particle-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .star {
+            position: absolute; background: #FFF; border-radius: 50%;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
+            transition: transform 0.25s ease-out;
+            animation: twinkle 3s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.25); }
+        }
+
+        .falling-item {
+            position: absolute; user-select: none; pointer-events: none;
+            animation: fallAndRotate linear infinite;
+        }
+        @keyframes fallAndRotate {
+            0% { transform: translateY(-40px) rotate(0deg) translateX(0); opacity: 0.95; }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(30px); opacity: 0.85; }
+            100% { transform: translateY(105vh) rotate(360deg) translateX(-25px); opacity: 0.15; }
+        }
+
+        #main-content { position: relative; z-index: 10; }
+        .container {
+            max-width: 1140px; width: 92%; margin: 0 auto; padding: 1.5rem 0;
+        }
+
+        /* NAVBAR */
+        header {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+            z-index: 100;
+            border-bottom: 1.5px solid var(--glass-border);
+            box-shadow: 0 6px 25px rgba(232, 93, 117, 0.08);
+        }
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 0; max-width: 1140px; width: 92%; margin: 0 auto;
+        }
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.7rem; font-weight: 800; color: var(--primary);
+            letter-spacing: -0.5px; text-decoration: none;
+            text-shadow: 0 2px 8px rgba(232, 93, 117, 0.2);
+        }
+        .logo span { color: var(--accent-blue); }
+
+        .nav-links { list-style: none; display: flex; gap: 2.2rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-heading);
+            font-weight: 600; font-size: 1rem; transition: all 0.25s ease;
+            position: relative; padding: 6px 0;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px;
+            background: var(--primary); border-radius: 4px; transition: width 0.3s ease;
+            box-shadow: 0 2px 6px rgba(232, 93, 117, 0.4);
+        }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .mobile-menu-btn {
+            display: none; background: none; border: none;
+            font-size: 1.5rem; color: var(--text-heading); cursor: pointer;
+        }
+
+        /* GLASSMORPHISM SECTIONS & ĐỔ BÓNG */
+        .glass-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1.5px solid var(--glass-border);
+            box-shadow: var(--shadow-card);
+            padding: 3.5rem 3rem; margin-bottom: 3rem;
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .glass-section:hover {
+            background: var(--glass-bg-hover);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(232, 93, 117, 0.4);
+        }
+
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.2rem; font-weight: 800;
+            color: var(--text-heading); margin-bottom: 2.2rem;
+            display: flex; align-items: center; gap: 16px;
+            text-shadow: var(--shadow-title);
+        }
+        .section-title i {
+            width: 52px; height: 52px; border-radius: 16px;
+            background: linear-gradient(135deg, rgba(232, 93, 117, 0.18), rgba(69, 183, 209, 0.18));
+            color: var(--primary); display: flex; justify-content: center;
+            align-items: center; font-size: 1.5rem;
+            box-shadow: 0 6px 16px rgba(232, 93, 117, 0.18);
+        }
+
+        /* HERO SECTION */
+        #hero {
+            margin-top: 110px; text-align: center; padding: 4.8rem 2.5rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 240, 243, 0.82));
+            box-shadow: var(--shadow-card);
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--peach-light); border: 1px solid rgba(232, 93, 117, 0.3);
+            padding: 8px 22px; border-radius: 50px; font-weight: 700;
+            color: var(--primary); font-size: 0.95rem; margin-bottom: 1.6rem;
+            box-shadow: 0 4px 14px rgba(232, 93, 117, 0.12);
+        }
+        #hero h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 3.8rem; font-weight: 800; color: var(--text-heading);
+            letter-spacing: -1px; margin-bottom: 0.9rem; line-height: 1.15;
+            text-shadow: 3px 5px 15px rgba(232, 93, 117, 0.22), 0 2px 4px rgba(0,0,0,0.04);
+        }
+        #hero h3 {
+            font-size: 1.45rem; color: #4A5568; font-weight: 600;
+            margin-bottom: 1.6rem;
+        }
+        #hero h3 span {
+            color: var(--primary); font-weight: 700;
+            background: linear-gradient(120deg, rgba(232, 93, 117, 0.15), rgba(69, 183, 209, 0.15));
+            padding: 3px 12px; border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(232, 93, 117, 0.1);
+        }
+        #hero p {
+            font-size: 1.18rem; max-width: 800px; margin: 0 auto 2.4rem auto;
+            color: var(--text-muted); line-height: 1.8; font-weight: 400;
+        }
+
+        .hero-buttons { display: flex; gap: 1.4rem; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 16px 36px; border-radius: 50px;
+            text-decoration: none; font-weight: 700; font-size: 1.05rem;
+            transition: all 0.3s ease; cursor: pointer; border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #D84A63);
+            color: white; box-shadow: 0 8px 24px rgba(232, 93, 117, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px); box-shadow: 0 12px 32px rgba(232, 93, 117, 0.55);
+        }
+        .btn-secondary {
+            background: white; color: var(--text-heading);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); border: 2px solid #E2E8F0;
+        }
+        .btn-secondary:hover {
+            background: #FFF; border-color: var(--primary); color: var(--primary);
+            transform: translateY(-4px); box-shadow: 0 10px 25px rgba(232, 93, 117, 0.2);
+        }
+
+        /* GRID SYSTEM */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+        /* ABOUT SECTION */
+        .info-card {
+            background: rgba(255, 255, 255, 0.78);
+            border-radius: var(--radius-md); padding: 2.2rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
+        }
+        .info-list { list-style: none; }
+        .info-list li {
+            font-size: 1.05rem; padding: 13px 0;
+            border-bottom: 1px dashed #E2E8F0;
+            display: flex; align-items: center; gap: 14px; font-weight: 500;
+        }
+        .info-list li:last-child { border-bottom: none; }
+        .info-list li i {
+            width: 38px; height: 38px; border-radius: 12px;
+            background: var(--peach-light); color: var(--primary);
+            display: flex; justify-content: center; align-items: center; font-size: 1.1rem;
+            flex-shrink: 0; box-shadow: 0 3px 10px rgba(232, 93, 117, 0.15);
+        }
+
+        .bio-box {
+            font-size: 1.12rem; line-height: 1.9; color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.82); padding: 2.2rem;
+            border-radius: var(--radius-md); border-left: 6px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(232, 93, 117, 0.08);
+        }
+
+        /* SKILLS SECTION */
+        .skill-card {
+            background: rgba(255, 255, 255, 0.82);
+            border-radius: var(--radius-md); padding: 2.2rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            transition: all 0.35s ease;
+        }
+        .skill-card:hover {
+            transform: translateY(-6px); background: white;
+            box-shadow: var(--shadow-hover); border-color: rgba(232, 93, 117, 0.45);
+        }
+        .skill-card h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.3rem; font-weight: 700; color: var(--text-heading);
+            margin-bottom: 0.9rem; display: flex; align-items: center; gap: 12px;
+            text-shadow: 1px 2px 6px rgba(0,0,0,0.05);
+        }
+        .skill-card h3 i {
+            width: 40px; height: 40px; border-radius: 12px;
+            background: var(--lavender-light); color: var(--secondary);
+            display: flex; justify-content: center; align-items: center; font-size: 1.15rem;
+            box-shadow: 0 4px 12px rgba(107, 91, 149, 0.15);
+        }
+        .skill-card p { font-size: 1.02rem; color: var(--text-muted); line-height: 1.65; }
+        
+        .progress-bar {
+            width: 100%; height: 9px; background: #EDF2F7;
+            border-radius: 10px; overflow: hidden; margin-top: 1.3rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--primary-soft), var(--primary));
+            border-radius: 10px; box-shadow: 0 2px 8px rgba(232, 93, 117, 0.4);
+        }
+
+        /* PROJECTS SECTION */
+        .project-card {
+            background: rgba(255, 255, 255, 0.84);
+            border-radius: var(--radius-md); padding: 2.3rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.35s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-8px); background: #FFF;
+            box-shadow: var(--shadow-hover); border-color: rgba(232, 93, 117, 0.45);
+        }
+        .project-badge {
+            display: inline-block; background: var(--lavender-light); color: var(--secondary);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;
+            margin-bottom: 1.1rem; box-shadow: 0 2px 8px rgba(107, 91, 149, 0.1);
+        }
+        .project-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.38rem; font-weight: 700; color: var(--text-heading);
+            margin-bottom: 0.9rem; line-height: 1.35;
+            text-shadow: 1px 2px 5px rgba(0,0,0,0.04);
+        }
+        .project-card p { font-size: 1.02rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 0; }
+
+        /* ========================================================
+           BÉ CÚN CUTE SIÊU CẤP (SHIBA / CORGI PUPPY SVG NGHỆ THUẬT)
+           ======================================================== */
+        #dog-container {
+            position: fixed; bottom: 15px; right: 5vw;
+            width: 125px; height: 110px;
+            cursor: pointer; z-index: 99;
+            animation: walkAcross 18s linear infinite alternate;
+        }
+
+        @keyframes walkAcross {
+            0% { transform: translateX(0); }
+            49% { transform: translateX(-38vw); }
+            50% { transform: translateX(-38vw); }
+            99% { transform: translateX(0); }
+            100% { transform: translateX(0); }
+        }
+
+        #dog-container:hover { animation-play-state: paused; }
+
+        .dog-sprite {
+            width: 100%; height: 100%;
+            transition: transform 0.3s ease;
+            animation: flipDog 18s steps(1) infinite alternate;
+        }
+
+        @keyframes flipDog {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(-1); }
+        }
+
+        /* Hiệu ứng Đuôi Vẫy Mừng Rỡ */
+        .svg-tail {
+            transform-origin: 85px 52px;
+            animation: gentleTail 1s infinite alternate ease-in-out;
+        }
+        #dog-container:hover .svg-tail {
+            animation: happyWag 0.12s infinite alternate ease-in-out !important;
+        }
+        @keyframes gentleTail {
+            0% { transform: rotate(-8deg); }
+            100% { transform: rotate(22deg); }
+        }
+        @keyframes happyWag {
+            0% { transform: rotate(-15deg); }
+            100% { transform: rotate(40deg); }
+        }
+
+        /* Chân cún bước đi nhịp nhàng */
+        .svg-leg-f1, .svg-leg-b1 {
+            transform-origin: top center;
+            animation: legMove1 0.5s infinite alternate ease-in-out;
+        }
+        .svg-leg-f2, .svg-leg-b2 {
+            transform-origin: top center;
+            animation: legMove2 0.5s infinite alternate ease-in-out;
+        }
+        @keyframes legMove1 { 0% { transform: rotate(-14deg); } 100% { transform: rotate(16deg); } }
+        @keyframes legMove2 { 0% { transform: rotate(16deg); } 100% { transform: rotate(-14deg); } }
+
+        /* Tai cún nảy nhẹ khi đi */
+        .svg-ear-l, .svg-ear-r {
+            transform-origin: bottom center;
+            animation: earBounce 1.2s infinite alternate ease-in-out;
+        }
+        @keyframes earBounce { 0% { transform: rotate(0deg); } 100% { transform: rotate(-5deg); } }
+
+        /* Trái tim nổ tung khi hover */
+        .heart-burst {
+            position: absolute; top: -28px; left: 50px;
+            font-size: 28px; color: #FF4D4D; opacity: 0;
+            pointer-events: none; z-index: 100;
+        }
+        .heart-burst.pop { animation: floatHeart 1.2s ease-out forwards; }
+        @keyframes floatHeart {
+            0% { transform: translateY(0) scale(0.6); opacity: 1; }
+            100% { transform: translateY(-80px) scale(1.6); opacity: 0; }
+        }
+
+        /* BẢNG ÂM NHẠC */
+        .music-widget {
+            position: fixed; bottom: 25px; left: 25px;
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+            padding: 10px 18px; border-radius: 40px;
+            border: 1.5px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(232, 93, 117, 0.15);
+            z-index: 100; transition: all 0.3s ease;
+        }
+        .music-widget:hover { background: white; transform: scale(1.03); }
+
+        .music-btn {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-soft), var(--primary));
+            color: white; display: flex; justify-content: center; align-items: center;
+            font-size: 1.1rem; cursor: pointer; border: none; transition: 0.3s;
+            box-shadow: 0 4px 14px rgba(232, 93, 117, 0.4); flex-shrink: 0;
+        }
+        .music-btn.playing { animation: pulseBtn 1.5s infinite alternate; }
+        @keyframes pulseBtn {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(232, 93, 117, 0.5); }
+            100% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(232, 93, 117, 0); }
+        }
+
+        .volume-control { display: flex; align-items: center; gap: 8px; }
+        .volume-control i { color: var(--primary); font-size: 1.05rem; }
+        .volume-slider { width: 85px; accent-color: var(--primary); cursor: pointer; height: 5px; }
+
+        /* FOOTER */
+        footer {
+            text-align: center; padding: 2.5rem;
+            color: var(--text-muted); font-weight: 500; font-size: 1rem;
+            background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(12px);
+            border-top: 1.5px solid var(--glass-border);
+        }
+
+        @media (max-width: 992px) {
+            #hero h1 { font-size: 3rem; }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .glass-section { padding: 2.8rem 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px);
+                flex-direction: column; padding: 1.5rem 0; gap: 1.2rem;
+                border-bottom: 1px solid var(--glass-border);
+                display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+            }
+            .nav-links.active { display: flex; }
+
+            #hero { margin-top: 85px; padding: 3rem 1.2rem; }
+            #hero h1 { font-size: 2.4rem; }
+            #hero h3 { font-size: 1.18rem; }
+            #hero p { font-size: 1.02rem; }
+
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .glass-section { padding: 2.2rem 1.4rem; border-radius: 22px; }
+            .section-title { font-size: 1.75rem; }
+            
+            #dog-container { display: none; }
+            .music-widget { bottom: 15px; left: 15px; padding: 8px 14px; }
+            .volume-slider { width: 65px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particle-container"></div>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-widget">
+        <button class="music-btn" id="music-btn" title="Bật/Tắt Nhạc Nền">
+            <i class="fas fa-play"></i>
+        </button>
+        <div class="volume-control">
+            <i class="fas fa-volume-up"></i>
+            <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.05" value="0.8" title="Điều chỉnh âm lượng">
+        </div>
+    </div>
+
+    <div id="main-content">
+        <!-- HEADER -->
+        <header>
+            <div class="navbar">
+                <a href="#hero" class="logo">Thanh Ngân<span>.</span></a>
+                <button class="mobile-menu-btn" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <ul class="nav-links" id="nav-menu">
+                    <li><a href="#hero">Trang chủ</a></li>
+                    <li><a href="#about">Giới thiệu</a></li>
+                    <li><a href="#skills">Kỹ năng</a></li>
+                    <li><a href="#projects">Dự án</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- HERO SECTION -->
+            <section id="hero" class="glass-section">
+                <div class="hero-badge">
+                    <i class="fas fa-graduation-cap"></i> Đại học Kinh tế TP.HCM (UEH)
+                </div>
+                <h1>Bùi Thanh Ngân</h1>
+                <h3>Chuyên viên E-Commerce & <span>UI/UX Design</span></h3>
+                <p>Sinh viên năm 4 ngành Thương mại điện tử với tư duy thiết kế trải nghiệm người dùng và phân tích dữ liệu kinh doanh. Định hướng phát triển chuyên sâu trong mảng UI/UX Design và Quản trị chuỗi cung ứng E-Logistics.</p>
+                <div class="hero-buttons">
+                    <a href="#about" class="btn btn-primary"><i class="fas fa-user"></i> Hồ sơ năng lực</a>
+                    <a href="#" class="btn btn-secondary"><i class="fas fa-file-pdf"></i> Tải CV chuyên nghiệp</a>
+                </div>
+            </section>
+
+            <!-- ABOUT SECTION -->
+            <section id="about" class="glass-section">
+                <h2 class="section-title"><i class="fas fa-user-tie"></i> Giới Thiệu Bản Thân</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <ul class="info-list">
+                            <li><i class="fas fa-calendar-day"></i> <span><strong>Ngày sinh:</strong> 30/12/2004</span></li>
+                            <li><i class="fas fa-user-graduate"></i> <span><strong>Trình độ:</strong> Sinh viên năm 4 (Khóa 47)</span></li>
+                            <li><i class="fas fa-university"></i> <span><strong>Trường:</strong> Đại học Kinh tế TP.HCM (UEH)</span></li>
+                            <li><i class="fas fa-award"></i> <span><strong>Chuyên ngành:</strong> Thương mại điện tử</span></li>
+                            <li><i class="fas fa-compass"></i> <span><strong>Sở thích:</strong> Thiết kế UI/UX, Đọc sách công nghệ, Chụp ảnh sản phẩm & Đồ họa số 🎨</span></li>
+                        </ul>
+                    </div>
+                    <div class="bio-box">
+                        <p>Là một sinh viên Thương mại điện tử đầy nhiệt huyết tại UEH, mình kết hợp hài hòa giữa <strong>tư duy phân tích chuỗi cung ứng</strong> và <strong>năng lực thiết kế sản phẩm số hiện đại</strong>. Mình tập trung tối ưu hóa hành vi mua sắm của người dùng trên nền tảng E-Commerce thông qua giao diện trực quan, tinh tế và trải nghiệm mượt mà.</p>
+                        <p style="margin-top: 12px;">Được trang bị nền tảng chuyên môn vững chắc cùng thái độ làm việc chủ động và cầu thị, mình luôn hướng đến việc xây dựng các sản phẩm công nghệ có tính ứng dụng cao, mang lại giá trị bền vững cho doanh nghiệp.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SKILLS SECTION -->
+            <section id="skills" class="glass-section">
+                <h2 class="section-title"><i class="fas fa-cubes"></i> Năng Lực Chuyên Môn</h2>
+                <div class="grid-2">
+                    <div class="skill-card">
+                        <h3><i class="fas fa-pen-ruler"></i> UI/UX Design & System Analysis</h3>
+                        <p>Nghiên cứu trải nghiệm người dùng, xây dựng Wireframe, Prototype tương tác. Thiết kế luồng vận hành hệ thống (Operational Flow 18 bước) và lập tài liệu đặc tả Use Case chuyên nghiệp.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="skill-card">
+                        <h3><i class="fas fa-truck-fast"></i> E-Logistics & Supply Chain Management</h3>
+                        <p>Phân tích sơ đồ chuỗi cung ứng End-to-End, quy trình vận tải hàng nhập FCL, tối ưu vận hành kho bãi và xây dựng phương án xử lý sự cố container trễ hạn.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 86%;"></div></div>
+                    </div>
+                    <div class="skill-card">
+                        <h3><i class="fas fa-chart-line"></i> Quản trị E-Commerce & Marketing Số</h3>
+                        <p>Vận hành hệ thống gian hàng số, phân tích hành vi khách hàng qua dữ liệu CRM, lên chiến dịch Digital Marketing và theo dõi chỉ số chuyển đổi hiệu quả.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 88%;"></div></div>
+                    </div>
+                    <div class="skill-card">
+                        <h3><i class="fas fa-globe-americas"></i> Tiếng Anh Chuyên Ngành & Giao Tiếp Doanh Nghiệp</h3>
+                        <p>Đọc hiểu thành thạo tài liệu kỹ thuật quốc tế, báo cáo phân tích thị trường E-Commerce, giao tiếp công việc tự tin và làm việc hiệu quả với các giao diện phần mềm chuyên ngành.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECTS SECTION -->
+            <section id="projects" class="glass-section" style="margin-bottom: 50px;">
+                <h2 class="section-title"><i class="fas fa-folder-open"></i> Dự Án & Nghiên Cứu Tiêu Biểu</h2>
+                <div class="grid-3">
+                    <div class="project-card">
+                        <div>
+                            <span class="project-badge">System Analysis & UI/UX</span>
+                            <h4>Mô hình hóa Luồng Vận hành Hệ thống Đặt vé Xem phim</h4>
+                            <p>Xây dựng bộ tài liệu đặc tả Use Case chuẩn hóa và sơ đồ hóa luồng vận hành chi tiết 18 bước, tối ưu hóa giao diện tương tác và quy trình thanh toán nhằm nâng cao trải nghiệm khách hàng.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div>
+                            <span class="project-badge">Supply Chain Analysis</span>
+                            <h4>Nghiên cứu Chuỗi cung ứng Toàn cầu Electrolux & Kuehne+Nagel</h4>
+                            <p>Phân tích chuyên sâu hệ thống thu mua chiến lược của tập đoàn Electrolux và lập bản đồ quy trình logistics End-to-End cho Kuehne+Nagel, đề xuất mô hình đánh giá KPI kho bãi.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div>
+                            <span class="project-badge">Operations Optimization</span>
+                            <h4>Đánh giá & Tối ưu hóa Vận tải Import FCL - TX Logistics</h4>
+                            <p>Phân tích thực trạng hoạt động nhập khẩu hàng nguyên container (FCL), nhận diện nguyên nhân gây trễ container và đề xuất giải pháp cải tiến chất lượng dịch vụ vận chuyển.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ========================================================
+         SVG BÉ CÚN CUTE SIÊU CẤP (DESIGN CHUẨN CORGI / SHIBA PUPPY)
+         ======================================================== -->
+    <div id="dog-container" title="Bé cún Nâu siêu cute! Rê chuột vào để cún vẫy đuôi mừng rỡ nhé ❤️">
+        <div class="heart-burst" id="heart-pop"><i class="fas fa-heart"></i></div>
+        <div class="dog-sprite">
+            <svg width="125" height="100" viewBox="0 0 130 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Đuôi bông xù vẫy mượt -->
+                <g class="svg-tail">
+                    <path d="M92 48 C102 38, 116 28, 110 14 C102 6, 92 20, 88 40 Z" fill="#D98A4B" stroke="#7A4217" stroke-width="2.5" stroke-linejoin="round"/>
+                    <path d="M102 20 C106 14, 110 14, 108 18 Z" fill="#FFF5EB"/>
+                </g>
+                
+                <!-- Chân sau 2 -->
+                <g class="svg-leg-b2">
+                    <rect x="74" y="68" width="12" height="22" rx="6" fill="#B56E33"/>
+                    <ellipse cx="80" cy="89" rx="7" ry="4" fill="#FCEADB"/>
+                </g>
+                <!-- Chân trước 2 -->
+                <g class="svg-leg-f2">
+                    <rect x="42" y="68" width="12" height="22" rx="6" fill="#B56E33"/>
+                    <ellipse cx="48" cy="89" rx="7" ry="4" fill="#FCEADB"/>
+                </g>
+
+                <!-- Thân cún tròn trĩnh mập mạp -->
+                <rect x="34" y="38" width="60" height="40" rx="20" fill="#D98A4B" stroke="#7A4217" stroke-width="2.5"/>
+                <!-- Bụng lông trắng kem cute -->
+                <path d="M44 50 C50 66, 72 66, 78 50 C74 74, 48 74, 44 50 Z" fill="#FFF5EB"/>
+
+                <!-- Chân sau 1 -->
+                <g class="svg-leg-b1">
+                    <rect x="80" y="70" width="13" height="23" rx="6.5" fill="#D98A4B" stroke="#7A4217" stroke-width="2"/>
+                    <ellipse cx="86.5" cy="92" rx="7.5" ry="4.5" fill="#FFF5EB" stroke="#7A4217" stroke-width="1.5"/>
+                </g>
+                <!-- Chân trước 1 -->
+                <g class="svg-leg-f1" >
+                    <rect x="48" y="70" width="13" height="23" rx="6.5" fill="#D98A4B" stroke="#7A4217" stroke-width="2"/>
+                    <ellipse cx="54.5" cy="92" rx="7.5" ry="4.5" fill="#FFF5EB" stroke="#7A4217" stroke-width="1.5"/>
+                </g>
+
+                <!-- Vòng cổ màu đỏ tim có chuông vàng -->
+                <rect x="28" y="38" width="20" height="7" rx="3.5" fill="#E85D75"/>
+                <circle cx="38" cy="46" r="4.5" fill="#FFD166" stroke="#D84A63" stroke-width="1.2"/>
+                <circle cx="38" cy="46" r="1.5" fill="#996000"/>
+
+                <!-- Đầu cún Nâu tròn xoe -->
+                <circle cx="35" cy="26" r="24" fill="#D98A4B" stroke="#7A4217" stroke-width="2.5"/>
+                <!-- Vệt trắng giữa trán cute -->
+                <path d="M32 4 C34 14, 36 14, 38 4 C36 18, 34 18, 32 4 Z" fill="#FFF5EB"/>
+
+                <!-- Tai trái cụp nảy mượt -->
+                <g class="svg-ear-l">
+                    <path d="M16 12 C8 20, 10 38, 18 34 C22 30, 22 16, 16 12 Z" fill="#B56E33" stroke="#7A4217" stroke-width="2"/>
+                    <path d="M16 16 C11 22, 12 32, 17 30 Z" fill="#FFB7B2"/>
+                </g>
+                <!-- Tai phải cụp nảy mượt -->
+                <g class="svg-ear-r">
+                    <path d="M48 12 C56 20, 54 38, 46 34 C42 30, 42 16, 48 12 Z" fill="#B56E33" stroke="#7A4217" stroke-width="2"/>
+                    <path d="M48 16 C53 22, 52 32, 47 30 Z" fill="#FFB7B2"/>
+                </g>
+
+                <!-- Mõm tròn màu trắng kem -->
+                <ellipse cx="28" cy="32" rx="12" ry="9" fill="#FFF5EB" stroke="#7A4217" stroke-width="1.5"/>
+                <!-- Mũi cún tròn xinh -->
+                <path d="M25 27 C27 24, 31 24, 33 27 C31 31, 27 31, 25 27 Z" fill="#2B1609"/>
+                <!-- Lưỡi thè hồng xinh (:P) -->
+                <path d="M26 34 Q29 41 32 34 Z" fill="#FF7B89" stroke="#E85D75" stroke-width="1"/>
+
+                <!-- Đôi mắt tròn to lấp lánh như hoạt hình -->
+                <g>
+                    <circle cx="22" cy="21" r="4" fill="#1A1A1A"/>
+                    <circle cx="20.5" cy="19.5" r="1.6" fill="white"/>
+                    <circle cx="23" cy="22.5" r="0.8" fill="white"/>
+
+                    <circle cx="36" cy="21" r="4" fill="#1A1A1A"/>
+                    <circle cx="34.5" cy="19.5" r="1.6" fill="white"/>
+                    <circle cx="37" cy="22.5" r="0.8" fill="white"/>
+                </g>
+
+                <!-- Má hồng ứng hồng cực cute -->
+                <ellipse cx="16" cy="28" rx="4" ry="2.5" fill="#FF9AA2" opacity="0.75"/>
+                <ellipse cx="42" cy="28" rx="4" ry="2.5" fill="#FF9AA2" opacity="0.75"/>
+            </svg>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Bùi Thanh Ngân | Portfolio Chuyên Nghiệp • UEH E-Commerce Student 🌸🐾</p>
+    </footer>
+
+    <script>
+        const container = document.getElementById('particle-container');
+        const stars = [];
+        const items = ['🌸', '🌼', '🍃', '🌿', '✨'];
+
+        for (let i = 0; i < 85; i++) {
+            let star = document.createElement('div');
+            star.classList.add('star');
+            let size = Math.random() * 2.5 + 1.5;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            container.appendChild(star);
+            stars.push({ element: star });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            let mouseX = e.clientX;
+            let mouseY = e.clientY;
+            stars.forEach(starObj => {
+                let rect = starObj.element.getBoundingClientRect();
+                let starX = rect.left + rect.width / 2;
+                let starY = rect.top + rect.height / 2;
+                let distX = mouseX - starX;
+                let distY = mouseY - starY;
+                let distance = Math.sqrt(distX * distX + distY * distY);
+
+                if (distance < 100) {
+                    let force = (100 - distance) / 100;
+                    let moveX = -(distX / distance) * force * 30;
+                    let moveY = -(distY / distance) * force * 30;
+                    starObj.element.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.3)`;
+                } else {
+                    starObj.element.style.transform = 'translate(0, 0) scale(1)';
+                }
+            });
+        });
+
+        function createFallingItem() {
+            const item = document.createElement('div');
+            item.classList.add('falling-item');
+            item.innerText = items[Math.floor(Math.random() * items.length)];
+            item.style.left = Math.random() * 95 + 'vw';
+            item.style.fontSize = (Math.random() * 10 + 13) + 'px';
+            const duration = Math.random() * 6 + 7;
+            item.style.animationDuration = duration + 's';
+            container.appendChild(item);
+            setTimeout(() => { item.remove(); }, duration * 1000);
+        }
+        for (let i = 0; i < 12; i++) { setTimeout(createFallingItem, i * 400); }
+        setInterval(createFallingItem, 1000);
+
+        const dogContainer = document.getElementById('dog-container');
+        const heartPop = document.getElementById('heart-pop');
+
+        dogContainer.addEventListener('mouseenter', () => {
+            heartPop.classList.remove('pop');
+            void heartPop.offsetWidth;
+            heartPop.classList.add('pop');
+        });
+
+        const musicBtn = document.getElementById('music-btn');
+        const bgMusic = document.getElementById('bg-music');
+        const volumeSlider = document.getElementById('volume-slider');
+        let isPlaying = false;
+
+        bgMusic.volume = parseFloat(volumeSlider.value);
+        volumeSlider.addEventListener('input', (e) => {
+            bgMusic.volume = parseFloat(e.target.value);
+        });
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                bgMusic.play().then(() => {
+                    musicBtn.classList.add('playing');
+                    musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                }).catch(err => {
+                    console.log("Autoplay blocked:", err);
+                });
+            }
+            isPlaying = !isPlaying;
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
